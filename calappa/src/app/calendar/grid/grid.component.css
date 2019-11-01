@@ -1,0 +1,30 @@
+div.moCalDays
+{height: 100px;}
+
+div.moCalDaysHead {
+    background-color: #02437a;
+    padding-top: 5px;
+    padding-bottom: 5px; 
+    margin-bottom: 20px;
+    border-radius: 5px;
+    color: white;
+    text-transform: lowercase;
+}
+
+div.currDayDiv {
+    background-color: #02437a;
+    border-radius: 5px;
+}
+.badge-success {
+    margin-top: 3px;
+}
+
+.badge-warning {
+    font-size: 14px;
+    display: none;
+}
+
+div.moCalDays:hover .badge-warning {
+    display: inline-block;
+}
+

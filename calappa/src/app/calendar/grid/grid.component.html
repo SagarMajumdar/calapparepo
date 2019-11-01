@@ -1,0 +1,18 @@
+<div class="row moCalDaysHead">
+    <div class="col" *ngFor="let dw of weekdays">
+        {{dw.day}}
+    </div>
+</div>
+<div *ngFor = "let ds of dayStructure.days" class="row">
+    <div [ngClass]=" {currDayDiv:currDay(d.day, dayStructure.mo, dayStructure.yr)}" *ngFor = "let d of ds.cols" class="col moCalDays">
+        <div [ngClass]="{'badge badge-primary' : currDay(d.day, dayStructure.mo, dayStructure.yr)}" *ngIf="d.day != -1; else blankdayspan"> 
+            {{d.day}}
+            <!-- <a (click)="sendMoEvtData(dayStructure.yr, dayStructure.mo, d.day)" class="badge badge-warning">+</a> -->
+            <a class="badge badge-warning">+</a>
+            
+        </div>
+        <ng-template #blankdayspan><div></div></ng-template>
+    </div>  
+</div>
+
+
