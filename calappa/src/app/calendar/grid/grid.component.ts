@@ -200,8 +200,6 @@ import { Router, ActivatedRoute } from '@angular/router';
     }
   }
   sendMoEvtData(yr: number, mo: number, day: number) {
-    this.calser.sendMoEvtData(this.dayStructure);
-    this.router.navigate(['/evtadd/' + yr + '/' + mo + '/' + day ], {relativeTo: this.actRoute} );
   }
   ngOnDestroy() {
     this.sub.unsubscribe();

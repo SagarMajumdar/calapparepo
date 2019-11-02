@@ -9,13 +9,5 @@ export class CalendarService {
     updatedGridData(d: {selectedyr: number, selectedmo: number}) {
         this.yrmochanged.next(d);
     }
-    sendMoEvtData(obj) {
-        this.obj.next(obj);
-    }
-    addevt(evt: { dd: number, month: number, year: number, starthr: number, startmin: number, endhr: number, 
-        endmin: number, evtdesc: string }) {
-        this.evtsub.next(evt);
-        //console.log(evt);
-    }
 }
 
