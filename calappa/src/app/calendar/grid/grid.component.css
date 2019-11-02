@@ -28,3 +28,24 @@ div.moCalDays:hover .badge-warning {
     display: inline-block;
 }
 
+div.todoitems_outerdiv {
+    overflow-y: scroll;
+    height: 60px;
+    font-size: 11px;
+    margin-top:2px;
+    padding:1px;
+}
+div.todoitems_innerdiv {
+    margin-bottom: 1px;
+    color: white;
+    padding:1px;
+    border-radius: 2px;
+    background-color: #007bff;
+}
+div.todoitems_innerdiv_done {
+    color: white;
+    background-color:
+    #17a203;
+}
+
+

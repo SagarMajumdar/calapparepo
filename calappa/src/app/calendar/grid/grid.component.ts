@@ -55,8 +55,21 @@ import { Router, ActivatedRoute } from '@angular/router';
     ]
   };
   // @Input() curryrmo: {curryr: number, currmo: number};
-
+    
   constructor(private calser: CalendarService, private router: Router, private actRoute: ActivatedRoute) { }
+  getotodos(yr: number, mo: number, dd: number) {
+    let todosmo = this.returnMoTodos(mo, yr);
+    let flg = 0;
+    for (let k = 0; k < todosmo.length; k++) {
+      if (todosmo[k].day === dd) {
+        flg = 1;
+        return todosmo[k].todoitems;
+      }
+    }
+    if (flg === 0) {
+      return [];
+    }
+  }
   ngOnInit() {
     let flg = 1;
     let rownum = 0;
@@ -77,6 +90,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                 day : i,
                 dayname: this.weekdays[(new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay()].day,
                 dayofweek :  (new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay() + 1
+                , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i) 
               }
             ]} );
           flg = 0;
@@ -86,6 +100,7 @@ import { Router, ActivatedRoute } from '@angular/router';
               day : i,
               dayname: this.weekdays[(new Date(this.yrmo.yr, this.yrmo.mo, i - 1) ).getDay()].day,
               dayofweek :  (new Date(this.yrmo.yr, this.yrmo.mo, i - 1) ).getDay() + 1
+              , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i) 
             }
           );
         }
@@ -110,6 +125,7 @@ import { Router, ActivatedRoute } from '@angular/router';
               day : i,
               dayname: this.weekdays[(new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay()].day,
               dayofweek :  (new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay() + 1
+              , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i) 
             }
           ]} );
         flg = 0;
@@ -119,6 +135,7 @@ import { Router, ActivatedRoute } from '@angular/router';
             day : i,
             dayname: this.weekdays[(new Date(this.yrmo.yr, this.yrmo.mo, i - 1) ).getDay()].day,
             dayofweek :  (new Date(this.yrmo.yr, this.yrmo.mo, i - 1) ).getDay() + 1
+            , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i) 
           }
         );
       }
@@ -179,5 +196,91 @@ import { Router, ActivatedRoute } from '@angular/router';
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+  returnMoTodos(mm:number, yy:number) {
+    // go to db and get the events for a month in the following format
+    return  [
+      {
+        day: 1, todoitems: [ 
+          { itemdesc :  'buy vegetables', status : 'remaining'},
+          { itemdesc :  'buy fruits', status : 'done'},
+          { itemdesc :  'transfer rent money', status : 'done'}
+        ] 
+      },
+      {
+        day: 2, todoitems : [
+          { itemdesc :  'finish learining chapter 12', status : 'done'},
+          { itemdesc :  'visit museum with freinds', status : 'done'},
+          { itemdesc :  'Book train tickets to Guahati', status : 'done'},
+          { itemdesc :  'complete unfinished proj work', status : 'done'},
+          { itemdesc :  'buy grocerries', status : 'remaining'},
+          { itemdesc :  'buy vegetables', status : 'done'},
+          { itemdesc :  'buy paper clips', status : 'remaining'}
+        ]
+      },
+      {
+        day: 6, todoitems : [
+          { itemdesc :  'visit museum with freinds', status : 'done'},
+          { itemdesc :  'Book train tickets to Guahati', status : 'done'},
+          { itemdesc :  'complete unfinished proj work', status : 'done'},
+          { itemdesc :  'buy grocerries', status : 'remaining'}
+        ]
+      },
+      {
+        day: 7, todoitems : [
+          { itemdesc :  'buy chicken', status : 'done'},
+          { itemdesc :  'feed sparrows', status : 'remaining'},
+        ]
+      },
+      {
+        day: 8, todoitems : [
+          { itemdesc :  'finish work on INC 123466', status : 'done'},
+          { itemdesc :  'fix bug #13455', status : 'done'},
+          { itemdesc :  'bug retest failed #42566 -- analyze', status : 'done'},
+          { itemdesc :  'talk to supervisor -- appraisal', status : 'done'},
+          { itemdesc :  'buy bread', status : 'done'},
+          { itemdesc :  'buy rice', status : 'remaining'},
+          { itemdesc :  'check train ticket status', status : 'done'},
+          { itemdesc :  'change mail password', status : 'done'},
+          { itemdesc :  'fix bug #3532', status : 'remaining'},
+          { itemdesc :  'fix bug #753', status : 'remaining'},
+          { itemdesc :  'fix-bug #98473', status : 'done'}
+        ]
+      },
+      {
+        day: 14, todoitems : [
+          { itemdesc :  'finish work on INC 123466', status : 'done'},
+          { itemdesc :  'fix bug #13455', status : 'done'},
+          { itemdesc :  'bug retest failed #42566 -- analyze', status : 'done'},
+          { itemdesc :  'talk to supervisor -- appraisal', status : 'done'},
+          { itemdesc :  'fix-bug #98473', status : 'done'}
+        ]
+      },
+      {
+        day: 19, todoitems : [
+          { itemdesc :  'finish work on INC 123466', status : 'done'},
+          { itemdesc :  'fix bug #13455', status : 'done'},
+          { itemdesc :  'fix bug #3532', status : 'remaining'},
+          { itemdesc :  'fix bug #753', status : 'remaining'},
+          { itemdesc :  'fix-bug #98473', status : 'done'}
+        ]
+      },
+      {
+        day: 22, todoitems : [
+          { itemdesc :  'buy bread', status : 'done'},
+          { itemdesc :  'buy rice', status : 'remaining'},
+          { itemdesc :  'check train ticket status', status : 'done'},
+          { itemdesc :  'change mail password', status : 'done'},
+          { itemdesc :  'fix bug #3532', status : 'remaining'},
+          { itemdesc :  'fix bug #753', status : 'remaining'},
+          { itemdesc :  'fix-bug #98473', status : 'done'}
+        ]
+      },
+      {
+        day: 25, todoitems : [
+          { itemdesc :  'finish learining chapter 21', status : 'remaining'},
+        ]
+      }
+    ];
   }
 }
