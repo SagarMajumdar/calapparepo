@@ -58,6 +58,8 @@ import { Router, ActivatedRoute } from '@angular/router';
   
   flagGotMoTodos = false;
   todosmo;
+  currSelectedDay:number = 1 ;
+  currSelTodoItemlist = [];
   constructor(private calser: CalendarService, private router: Router, private actRoute: ActivatedRoute) { }
   getotodos(yr: number, mo: number, dd: number) {
     if (this.flagGotMoTodos === false) {
@@ -200,6 +202,9 @@ import { Router, ActivatedRoute } from '@angular/router';
     }
   }
   sendMoEvtData(yr: number, mo: number, day: number) {
+    this.currSelectedDay = day;
+    this.currSelTodoItemlist = this.getotodos(yr, mo, day);
+
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
@@ -259,8 +264,7 @@ import { Router, ActivatedRoute } from '@angular/router';
           { itemdesc :  'finish work on INC 123466', status : 'done'},
           { itemdesc :  'fix bug #13455', status : 'done'},
           { itemdesc :  'bug retest failed #42566 -- analyze', status : 'done'},
-          { itemdesc :  'talk to supervisor -- appraisal', status : 'done'},
-          { itemdesc :  'fix-bug #98473', status : 'done'}
+          { itemdesc :  'talk to supervisor -- appraisal', status : 'done'}
         ]
       },
       {
