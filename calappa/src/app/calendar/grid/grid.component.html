@@ -12,7 +12,7 @@
               
         </div>
         <ng-template #blankdayspan><div></div></ng-template>
-        <div *ngIf="d.todos != undefined && d.todos.length > 0" class="todoitems_outerdiv">
+        <div *ngIf="d.todos.length > 0" class="todoitems_outerdiv">
                 <div *ngFor="let todo of d.todos" class="todoitems_innerdiv" [ngClass]="{'todoitems_innerdiv_done' : todo.status == 'done' } "> {{todo.itemdesc}}</div>
         </div>
     </div>  

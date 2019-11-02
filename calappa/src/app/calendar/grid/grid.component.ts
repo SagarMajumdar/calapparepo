@@ -55,15 +55,19 @@ import { Router, ActivatedRoute } from '@angular/router';
     ]
   };
   // @Input() curryrmo: {curryr: number, currmo: number};
-    
+  
+  flagGotMoTodos = false;
+  todosmo;
   constructor(private calser: CalendarService, private router: Router, private actRoute: ActivatedRoute) { }
   getotodos(yr: number, mo: number, dd: number) {
-    let todosmo = this.returnMoTodos(mo, yr);
+    if (this.flagGotMoTodos === false) {
+      this.todosmo = this.returnMoTodos(mo, yr);
+    }
     let flg = 0;
-    for (let k = 0; k < todosmo.length; k++) {
-      if (todosmo[k].day === dd) {
+    for (let k = 0; k < this.todosmo.length; k++) {
+      if (this.todosmo[k].day === dd) {
         flg = 1;
-        return todosmo[k].todoitems;
+        return this.todosmo[k].todoitems;
       }
     }
     if (flg === 0) {
@@ -74,6 +78,7 @@ import { Router, ActivatedRoute } from '@angular/router';
     let flg = 1;
     let rownum = 0;
     this.sub = this.calser.yrmochanged.subscribe((d) => {
+      this.flagGotMoTodos = false;
       this.yrmo.yr = d.selectedyr;
       this.yrmo.mo = d.selectedmo;
       flg = 1;
@@ -94,6 +99,7 @@ import { Router, ActivatedRoute } from '@angular/router';
               }
             ]} );
           flg = 0;
+          this.flagGotMoTodos = true;
         } else {
           this.dayStructure.days[rownum].cols.push(
             {
@@ -116,6 +122,8 @@ import { Router, ActivatedRoute } from '@angular/router';
       this.dayStructure = this.fillblanks(this.dayStructure);
     });
     //
+    
+    this.flagGotMoTodos = false;
     this.dayStructure.days.length = 0;
     for (let i = 1; i <= this.modays[this.yrmo.mo - 1].days; i++) {
       if (flg === 1) {
@@ -129,6 +137,7 @@ import { Router, ActivatedRoute } from '@angular/router';
             }
           ]} );
         flg = 0;
+        this.flagGotMoTodos = true;
       } else {
         this.dayStructure.days[rownum].cols.push(
           {
@@ -169,7 +178,7 @@ import { Router, ActivatedRoute } from '@angular/router';
     if (ds.days[0].cols[0].dayofweek > 1) {
       tmpv = ds.days[0].cols[0].dayofweek - 1;
       for (let r = 0 ; r < tmpv ; r++) {
-        ds.days[0].cols.splice(r, 0, {day: -1, dayname: '', dayofweek: -1} );
+        ds.days[0].cols.splice(r, 0, {day: -1, dayname: '', dayofweek: -1, todos : []} );
       }
     }
     // pushing blank data at the end
@@ -177,7 +186,7 @@ import { Router, ActivatedRoute } from '@angular/router';
           .cols.length < 7 ) {
           tmpv =   7 - ( ds.days[ this.dayStructure.days.length - 1 ].cols.length ) ;
           for (let r = 0 ; r < tmpv ; r++) {
-            ds.days[this.dayStructure.days.length - 1].cols.push(  {day: -1, dayname: '', dayofweek: -1} );
+            ds.days[this.dayStructure.days.length - 1].cols.push(  {day: -1, dayname: '', dayofweek: -1, todos: []} );
           }
     }
     return ds;
