@@ -9,3 +9,16 @@ form {
     margin-bottom: 2px;
     margin-top: 2px;
 }
+select {
+    height: 20px;
+    font-size: small;
+}
+.butn {
+    border: 1px solid #007bff;
+    margin-left: 5px;
+    border-radius: 4px;
+    background-color:#007bff;
+    color:white;
+    font-weight: inherit;
+    font-size: smaller;
+}

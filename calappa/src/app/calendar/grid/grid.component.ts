@@ -55,11 +55,9 @@ import { Router, ActivatedRoute } from '@angular/router';
     ]
   };
   // @Input() curryrmo: {curryr: number, currmo: number};
-  
+
   flagGotMoTodos = false;
   todosmo;
-  currSelectedDay:number = 1 ;
-  currSelTodoItemlist = [];
   constructor(private calser: CalendarService, private router: Router, private actRoute: ActivatedRoute) { }
   getotodos(yr: number, mo: number, dd: number) {
     if (this.flagGotMoTodos === false) {
@@ -97,7 +95,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                 day : i,
                 dayname: this.weekdays[(new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay()].day,
                 dayofweek :  (new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay() + 1
-                , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i) 
+                , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i)
               }
             ]} );
           flg = 0;
@@ -108,7 +106,7 @@ import { Router, ActivatedRoute } from '@angular/router';
               day : i,
               dayname: this.weekdays[(new Date(this.yrmo.yr, this.yrmo.mo, i - 1) ).getDay()].day,
               dayofweek :  (new Date(this.yrmo.yr, this.yrmo.mo, i - 1) ).getDay() + 1
-              , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i) 
+              , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i)
             }
           );
         }
@@ -118,13 +116,10 @@ import { Router, ActivatedRoute } from '@angular/router';
         }
       }
 
-      console.log('\n---------------------------------------------------------------\n'
-                  + this.dayStructure
-                  + '\n---------------------------------------------------------------\n');
+      console.log('\n---------------------------------------------------------------\n');
       this.dayStructure = this.fillblanks(this.dayStructure);
     });
     //
-    
     this.flagGotMoTodos = false;
     this.dayStructure.days.length = 0;
     for (let i = 1; i <= this.modays[this.yrmo.mo - 1].days; i++) {
@@ -135,7 +130,7 @@ import { Router, ActivatedRoute } from '@angular/router';
               day : i,
               dayname: this.weekdays[(new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay()].day,
               dayofweek :  (new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay() + 1
-              , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i) 
+              , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i)
             }
           ]} );
         flg = 0;
@@ -146,7 +141,7 @@ import { Router, ActivatedRoute } from '@angular/router';
             day : i,
             dayname: this.weekdays[(new Date(this.yrmo.yr, this.yrmo.mo, i - 1) ).getDay()].day,
             dayofweek :  (new Date(this.yrmo.yr, this.yrmo.mo, i - 1) ).getDay() + 1
-            , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i) 
+            , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i)
           }
         );
       }
@@ -155,9 +150,7 @@ import { Router, ActivatedRoute } from '@angular/router';
         rownum = rownum + 1;
       }
     }
-    console.log('\n---------------------------------------------------------------\n'
-                  + this.dayStructure
-                  + '\n---------------------------------------------------------------\n');
+    console.log('\n---------------------------------------------------------------\n');
     //
     this.dayStructure = this.fillblanks(this.dayStructure);
   }
@@ -202,22 +195,20 @@ import { Router, ActivatedRoute } from '@angular/router';
     }
   }
   sendMoEvtData(yr: number, mo: number, day: number) {
-    this.currSelectedDay = day;
-    this.currSelTodoItemlist = this.getotodos(yr, mo, day);
-
+    console.log('selected date : ' + day + '-' + mo + '-' + yr);
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-  returnMoTodos(mm:number, yy:number) {
+  returnMoTodos(mm: number, yy: number) {
     // go to db and get the events for a month in the following format
     return  [
       {
-        day: 1, todoitems: [ 
+        day: 1, todoitems: [
           { itemdesc :  'buy vegetables', status : 'remaining'},
           { itemdesc :  'buy fruits', status : 'done'},
           { itemdesc :  'transfer rent money', status : 'done'}
-        ] 
+        ]
       },
       {
         day: 2, todoitems : [
