@@ -104,8 +104,8 @@ import { Router, ActivatedRoute } from '@angular/router';
           this.dayStructure.days[rownum].cols.push(
             {
               day : i,
-              dayname: this.weekdays[(new Date(this.yrmo.yr, this.yrmo.mo, i - 1) ).getDay()].day,
-              dayofweek :  (new Date(this.yrmo.yr, this.yrmo.mo, i - 1) ).getDay() + 1
+              dayname: this.weekdays[(new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay()].day,
+              dayofweek :  (new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay() + 1
               , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i)
             }
           );
@@ -139,8 +139,8 @@ import { Router, ActivatedRoute } from '@angular/router';
         this.dayStructure.days[rownum].cols.push(
           {
             day : i,
-            dayname: this.weekdays[(new Date(this.yrmo.yr, this.yrmo.mo, i - 1) ).getDay()].day,
-            dayofweek :  (new Date(this.yrmo.yr, this.yrmo.mo, i - 1) ).getDay() + 1
+            dayname: this.weekdays[(new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay()].day,
+            dayofweek :  (new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay() + 1
             , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i)
           }
         );
