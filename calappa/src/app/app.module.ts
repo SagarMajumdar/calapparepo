@@ -1,29 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
-import { CalendarComponent } from './calendar/calendar.component';
-import { DtmoyrselectorComponent } from './calendar/dtmoyrselector/dtmoyrselector.component';
-import { GridComponent } from './calendar/grid/grid.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { CalendarService } from './calendar/calendar.service';
-const appRoutes: Routes = [
-];
+import { TodocalendarComponent } from './todocalendar/todocalendar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CalendarComponent,
-    DtmoyrselectorComponent,
-    GridComponent
+    TodocalendarComponent
   ],
   imports: [
-    BrowserModule,
-    RouterModule.forRoot(appRoutes),
-    FormsModule,
-    ReactiveFormsModule
+    BrowserModule ,FormsModule, HttpClientModule, ReactiveFormsModule
   ],
-  providers: [CalendarService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

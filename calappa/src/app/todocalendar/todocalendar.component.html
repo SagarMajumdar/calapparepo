@@ -1,0 +1,43 @@
+<div>
+<form [formGroup]="yrmofrm" (ngSubmit)="yrmosel()" class="ymosel">
+    <span class="cal-badge">yr</span>
+    <select id="yrsel" formControlName="selectedyr" >
+            <option *ngFor="let yr of yrlist" value="{{yr}}" >{{yr}}</option>
+        </select>
+        <span class="cal-badge">mo</span>
+    <select id="mosel" formControlName="selectedmo">
+        <option *ngFor="let moday of modays" value="{{moday.num}}">{{moday.mo}}</option>
+    </select>
+        <button type="submit" class="btn-blue">load</button>
+</form>
+
+<div class="prevnextdiv">
+   <button type="button"><</button>   <button type="button">></button> 
+</div>
+
+</div>
+
+<div class="moCalDaysHead">
+    <div *ngFor="let dw of weekdays">
+        {{dw.day}}
+    </div>
+</div>
+ <div *ngFor = "let ds of dayStructure.days" class="cal-row">
+    <div [ngClass]=" {currDayDiv:currDay(d.day, dayStructure.mo, dayStructure.yr)}" *ngFor = "let d of ds.cols" class="cal-col moCalDays">
+        <div [ngClass]="{'badge-blue' : currDay(d.day, dayStructure.mo, dayStructure.yr)}" *ngIf="d.day != -1; else blankdayspan"> 
+            {{d.day}}
+            <a class="badge-yellow" (click)="sendMoEvtData(dayStructure.yr, dayStructure.mo, d.day)">+</a>
+              
+        </div>
+        <ng-template><div></div></ng-template>
+        <div *ngIf="d.todos.length > 0" class="todoitems_outerdiv">
+                <div *ngFor="let todo of d.todos" class="todoitems_innerdiv" [ngClass]="{'todoitems_innerdiv_done' : todo.status == 'done' } "> {{todo.itemdesc}}</div>
+        </div>
+    </div>  
+</div>
+
+<div>
+    <span class="badge-green">done tasks</span> | 
+    <span class="badge-blue">incomplete tasks</span>
+</div>
+

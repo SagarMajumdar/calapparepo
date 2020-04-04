@@ -1,0 +1,132 @@
+* { font-family: sans-serif; }
+.cal-badge {
+    margin: 4px;
+    padding: 2px;
+}
+.btn-blue {
+    margin: 4px;
+    padding: 4px;
+    background-color: dodgerblue;
+    border:0px;
+    color: white;
+    cursor: pointer;
+    border-radius: 2px;
+}
+.moCalDaysHead {
+    border-radius: 3px;
+    background-color: #02437a;
+    padding: 4px;
+}
+.moCalDaysHead div {
+    font-size: smaller;
+    text-transform: uppercase;
+    text-align: center;
+    display: inline-block;
+    width: 14%;
+    color: white;
+}
+.cal-col {
+    width: 14%;
+    display: inline-block;
+    border :1px solid #f1f1f1;
+    vertical-align: top;
+}
+.ymosel {
+    display: inline-block;
+    width: 20%;
+    
+}
+
+.prevnextdiv
+{
+    display: inline-block;
+    width: 75%;
+    text-align: right;
+}
+.prevnextdiv button {
+    border: 0px;
+    background-color: white;
+    font-size: 19px;
+    cursor: pointer;
+    margin: 5px;
+    color: #b4b4b4;
+}
+.badge-blue {
+    padding: 2px;
+    margin:2px;
+    border-radius: 2px;
+    color: white;
+    background-color: dodgerblue;
+    display: inline-block;
+    font-size: small;
+}
+.badge-yellow {
+    display: inline-block;
+    padding: 2px;
+    margin:2px;
+    border-radius: 2px;
+    color: white;
+    font-weight: bold;
+    background-color: gold;
+    font-size: small;
+}
+.badge-green {
+    display: inline-block;
+    padding: 2px;
+    margin:2px;
+    border-radius: 2px;
+    color: white;
+    background-color: #17A203;
+    font-size: small;
+}
+
+
+div.moCalDays
+{height: 100px;}
+
+div.moCalDaysHead {
+    background-color: #02437a;
+    padding-top: 5px;
+    padding-bottom: 5px; 
+    margin-bottom: 20px;
+    border-radius: 5px;
+    color: white;
+    text-transform: lowercase;
+}
+
+div.currDayDiv {
+    background-color: #02437a;
+    border-radius: 5px;
+}
+.badge-success {
+    margin-top: 3px;
+}
+
+.badge-yellow {
+    font-size: 14px;
+    display: none;
+}
+
+div.moCalDays:hover .badge-yellow { 
+    display: inline-block;
+}
+
+div.todoitems_outerdiv {
+    overflow-y: scroll;
+    height: 60px;
+    font-size: 12px;
+    margin-top:2px;
+    padding:1px;
+}
+div.todoitems_innerdiv {
+    margin-bottom: 1px;
+    color: white;
+    padding:3px;
+    border-radius: 2px;
+    background-color: #007bff;
+}
+div.todoitems_innerdiv_done {
+    color: white;
+    background-color:
+    #17a203;
+}

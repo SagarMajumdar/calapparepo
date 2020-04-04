@@ -1,126 +1,58 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { CalendarService } from '../calendar.service';
-import { Subscription } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import {FormGroup, FormControl} from '@angular/forms';
+
 
 @Component({
-  selector: 'app-grid',
-  templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.css']
+  selector: 'app-todocalendar',
+  templateUrl: './todocalendar.component.html',
+  styleUrls: ['./todocalendar.component.css']
 })
-  export class GridComponent implements OnInit, OnDestroy {
-  ind = 1;
-  days: number[] = [];
+export class TodocalendarComponent implements OnInit {
+  yrlist = [];
   yrmo: {yr: number, mo: number} = { yr: new Date().getFullYear() , mo: ( new Date().getMonth() + 1 )};
-  sub: Subscription;
-  weekdays = [
-    {day: 'Mon' , num: 1},
-    {day: 'Tue' , num: 2 },
-    {day: 'Wed' , num: 3},
-    {day: 'Thu' , num: 4},
-    {day: 'Fri' , num: 5},
-    {day: 'Sat' , num: 6},
-    {day: 'Sun' , num: 7 }
-  ];
   modays = [
-     { mo: 'jan', num : 1 , days: 31},
-     { mo:  'feb', num : 2 , days: this.getlpdays()},
-     { mo: 'mar', num : 3 , days: 31},
-     { mo: 'apr', num : 4 , days: 30},
-     { mo: 'may', num : 5 , days: 31},
-     { mo: 'june', num : 6 , days: 30},
-     { mo: 'july', num : 7 ,  days: 31},
-     { mo: 'aug', num : 8 , days: 31},
-     { mo: 'sept', num : 9 , days: 30},
-     { mo: 'oct', num : 10 ,  days: 31},
-     { mo: 'nov', num : 11 , days: 30},
-     { mo: 'dec', num : 12 ,  days: 31}
-  ];
-  dayStructure = {
-    yr: this.yrmo.yr,
-    mo: this.yrmo.mo ,
-    days: [
-      // {
-      //   cols: [
-      //     {day: 1, dayname: 'thurs', dayofweek: 1 ,
-      //        events : [
-      //                       { evtdesc : 'lorem ipsum dolor', estarthr : 11, estartmin: 15, eendhr : 13, eendmin: 0 },
-      //                       { evtdesc : 'xx xxx xxxxx xx', estarthr : 10, estartmin: 0, eendhr : 11, eendmin: 5 }
-      //                 ]
-      //     },
-      //     {day: 2, dayname: 'fri', dayofweek:  2 }
-      //   ]
-      // },
-      // {}
-    ]
-  };
-  // @Input() curryrmo: {curryr: number, currmo: number};
+    { mo: 'jan', num : 1 , days: 31},
+    { mo:  'feb', num : 2 , days: this.getlpdays()},
+    { mo: 'mar', num : 3 , days: 31},
+    { mo: 'apr', num : 4 , days: 30},
+    { mo: 'may', num : 5 , days: 31},
+    { mo: 'june', num : 6 , days: 30},
+    { mo: 'july', num : 7 ,  days: 31},
+    { mo: 'aug', num : 8 , days: 31},
+    { mo: 'sept', num : 9 , days: 30},
+    { mo: 'oct', num : 10 ,  days: 31},
+    { mo: 'nov', num : 11 , days: 30},
+    { mo: 'dec', num : 12 ,  days: 31}
+ ];
+ yrmofrm: FormGroup;
+ weekdays = [
+  {day: 'Mon' , num: 1},
+  {day: 'Tue' , num: 2 },
+  {day: 'Wed' , num: 3},
+  {day: 'Thu' , num: 4},
+  {day: 'Fri' , num: 5},
+  {day: 'Sat' , num: 6},
+  {day: 'Sun' , num: 7 }
+];
+dayStructure = {
+  yr: this.yrmo.yr,
+  mo: this.yrmo.mo ,
+  days: [ ]
+};
+flagGotMoTodos = false;
+todosmo;
+  constructor() { }
 
-  flagGotMoTodos = false;
-  todosmo;
-  constructor(private calser: CalendarService, private router: Router, private actRoute: ActivatedRoute) { }
-  getotodos(yr: number, mo: number, dd: number) {
-    if (this.flagGotMoTodos === false) {
-      this.todosmo = this.returnMoTodos(mo, yr);
-    }
-    let flg = 0;
-    for (let k = 0; k < this.todosmo.length; k++) {
-      if (this.todosmo[k].day === dd) {
-        flg = 1;
-        return this.todosmo[k].todoitems;
-      }
-    }
-    if (flg === 0) {
-      return [];
-    }
-  }
-  ngOnInit() {
-    let flg = 1;
-    let rownum = 0;
-    this.sub = this.calser.yrmochanged.subscribe((d) => {
-      this.flagGotMoTodos = false;
-      this.yrmo.yr = d.selectedyr;
-      this.yrmo.mo = d.selectedmo;
-      flg = 1;
-      rownum = 0;
-      this.dayStructure.yr =  +this.yrmo.yr;
-      this.dayStructure.mo =  +this.yrmo.mo;
-      console.log(this.dayStructure.yr + '  ' + this.dayStructure.mo);
-      this.dayStructure.days.length = 0;
-      for (let i = 1; i <= this.modays[this.yrmo.mo - 1].days; i++) {
-        if (flg === 1) {
-          this.dayStructure.days.push (
-            {cols: [
-              {
-                day : i,
-                dayname: this.weekdays[(new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay()].day,
-                dayofweek :  (new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay() + 1
-                , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i)
-              }
-            ]} );
-          flg = 0;
-          this.flagGotMoTodos = true;
-        } else {
-          this.dayStructure.days[rownum].cols.push(
-            {
-              day : i,
-              dayname: this.weekdays[(new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay()].day,
-              dayofweek :  (new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay() + 1
-              , todos : this.getotodos(this.yrmo.yr, this.yrmo.mo, i)
-            }
-          );
-        }
-        if ( (new Date(this.yrmo.yr, this.yrmo.mo - 1, i - 1) ).getDay() === 6 ) {
-          flg = 1;
-          rownum = rownum + 1;
-        }
-      }
 
-      console.log('\n---------------------------------------------------------------\n');
-      this.dayStructure = this.fillblanks(this.dayStructure);
-    });
+  makeds () {
     //
     this.flagGotMoTodos = false;
+    this.yrmo.yr = this.yrmo.yr;
+    this.yrmo.mo = this.yrmo.mo;
+    let flg = 1;
+    let  rownum = 0;
+    this.dayStructure.yr =  +this.yrmo.yr;
+    this.dayStructure.mo =  +this.yrmo.mo;
     this.dayStructure.days.length = 0;
     for (let i = 1; i <= this.modays[this.yrmo.mo - 1].days; i++) {
       if (flg === 1) {
@@ -150,16 +82,38 @@ import { Router, ActivatedRoute } from '@angular/router';
         rownum = rownum + 1;
       }
     }
-    console.log('\n---------------------------------------------------------------\n');
-    //
     this.dayStructure = this.fillblanks(this.dayStructure);
   }
-
-
-  checkYear(year: number) {
-    return (((year % 4 === 0) && (year % 100 !== 0)) ||
-                            (year % 400 === 0));
+  ngOnInit() {
+    for ( let i = 2015; i < 2035 ; i++) { 
+      this.yrlist.push(i); 
+    }
+    this.yrmofrm = new FormGroup({
+      selectedyr: new FormControl( this.yrmo.yr ),
+      selectedmo: new FormControl( this.yrmo.mo )
+    });
+    this.makeds();
   }
+  
+    //
+  
+
+  getotodos(yr: number, mo: number, dd: number) {
+    if (this.flagGotMoTodos === false) {
+      this.todosmo = this.returnMoTodos(mo, yr);
+    }
+    let flg = 0;
+    for (let k = 0; k < this.todosmo.length; k++) {
+      if (this.todosmo[k].day === dd) {
+        flg = 1;
+        return this.todosmo[k].todoitems;
+      }
+    }
+    if (flg === 0) {
+      return [];
+    }
+  }
+
   getlpdays() {
     if (this.checkYear(this.yrmo.yr) ) {
       return 29;
@@ -167,6 +121,18 @@ import { Router, ActivatedRoute } from '@angular/router';
       return 28;
     }
   }
+
+  checkYear(year: number) {
+    return (((year % 4 === 0) && (year % 100 !== 0)) ||
+                             (year % 400 === 0));
+  }
+
+  yrmosel() {
+    this.yrmo.yr = this.yrmofrm.value.selectedyr ;
+    this.yrmo.mo = this.yrmofrm.value.selectedmo ;
+    this.makeds();
+  }
+
   fillblanks(ds) {
     let tmpv = 0;
     // pushing blank data at the start
@@ -186,6 +152,11 @@ import { Router, ActivatedRoute } from '@angular/router';
     }
     return ds;
   }
+
+  sendMoEvtData(yr: number, mo: number, day: number) {
+    console.log('selected date : ' + day + '-' + mo + '-' + yr);
+  }
+
   currDay(d: number, m: number, y: number) {
     const today = new Date();
     if ( d === today.getDate() && y === today.getFullYear() && m === (today.getMonth() + 1) ) {
@@ -193,12 +164,6 @@ import { Router, ActivatedRoute } from '@angular/router';
     } else {
       return false;
     }
-  }
-  sendMoEvtData(yr: number, mo: number, day: number) {
-    console.log('selected date : ' + day + '-' + mo + '-' + yr);
-  }
-  ngOnDestroy() {
-    this.sub.unsubscribe();
   }
   returnMoTodos(mm: number, yy: number) {
     // go to db and get the events for a month in the following format
